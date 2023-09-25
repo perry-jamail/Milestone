@@ -1,40 +1,58 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Class that is used to initialize and manage the inventory of the store
  */
 public class InventoryManager {
     Scanner scan = new Scanner(System.in);
-    Product sword;
-    Product bow;
-    Product chestplate;
-    Product boots;
-    Product healingPotion;
-    Product crackers;
+    ArrayList<Product> productsList;
 
     /**
-     * Constructor to initialize all the Product object variables defined at the top of the class
+     * Method that reads a JSON file and adds the data to an ArrayList
+     * @param filename input value for the JSON file
+     * @return ArrayList of Product objects read from the JSON file
      */
-    public InventoryManager() {
-        this.sword = new Weapon("Sword", 199.99, 5);
-        this.bow = new Weapon("Bow", 65.25, 10);
-        this.chestplate = new Armor("Chestplate", 60.50, 8);
-        this.boots = new Armor("Pair of Boots", 100, 3);
-        this.healingPotion = new Health("Healing Potion", 99.99, 2);
-        this.crackers = new Health("Crackers", 4.99, 30);
+    public ArrayList<Product> readFromFile(String filename) {
+        ArrayList<Product> products = new ArrayList<Product>();
+        try {
+            File file = new File(filename);
+            Scanner s = new Scanner(file);
+
+            while (s.hasNext()) {
+                String json = s.nextLine();
+                ObjectMapper objectMapper = new ObjectMapper();
+                Product product = objectMapper.readValue(json, Product.class);
+                products.add(product);
+            }
+
+            s.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return products;
     }
 
     /**
-     * Method that uses the addProduct() method on the Store object to add the different inventory items to the store list
+     * Constructor that initializes the productsList variable to the data from the JSON file by calling readFromFile()
+     */
+    public InventoryManager() {
+        productsList = readFromFile("in.json");
+    }
+
+    /**
+     * Method that adds each item in the productsList ArrayList to the products ArrayList in the Store object
      * @param store input value for the specified Store object
      */
     public void populateStore(Store store) {
-        store.products.add(sword);
-        store.products.add(bow);
-        store.products.add(chestplate);
-        store.products.add(boots);
-        store.products.add(healingPotion);
-        store.products.add(crackers);
+        for (int i = 0; i < productsList.size(); i++) {
+            store.products.add(productsList.get(i));
+        }
     }
 
     /**
@@ -67,10 +85,10 @@ public class InventoryManager {
         int choice = scan.nextInt();
         if (choice == 1) {
             store.displayStoreItems();
+            purchaseOptions(store);
         } else {
             System.out.println("Goodbye!");
         }
-        purchaseOptions(store);
     }
 
     /**
@@ -87,27 +105,27 @@ public class InventoryManager {
                 int b = scan.nextInt();
                 switch (a) {
                     case 1:
-                    store.cart.addToCart(sword, b);
+                    store.cart.addToCart(productsList.get(0), b);
                     break;
 
                     case 2:
-                    store.cart.addToCart(bow, b);
+                    store.cart.addToCart(productsList.get(1), b);
                     break;
 
                     case 3:
-                    store.cart.addToCart(chestplate, b);
+                    store.cart.addToCart(productsList.get(2), b);
                     break;
 
                     case 4:
-                    store.cart.addToCart(boots, b);
+                    store.cart.addToCart(productsList.get(3), b);
                     break;
 
                     case 5:
-                    store.cart.addToCart(healingPotion, b);
+                    store.cart.addToCart(productsList.get(4), b);
                     break;
 
                     case 6:
-                    store.cart.addToCart(crackers, b);
+                    store.cart.addToCart(productsList.get(5), b);
                     break;
                 }
             } else {

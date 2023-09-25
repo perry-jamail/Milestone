@@ -26,6 +26,18 @@ public class Product {
     }
 
     /**
+     * Default constructor for the Product class
+     */
+    public Product() {
+        this.name = "";
+        this.description = "";
+        this.price = 0;
+        this.quantity = 0;
+        this.numInCart = 0;
+        this.inCart = false;
+    }
+
+    /**
      * Getter method for the name variable
      * @return the value of the name variable
      */
