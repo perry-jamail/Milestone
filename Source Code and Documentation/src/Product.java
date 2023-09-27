@@ -1,7 +1,8 @@
 /**
- * Product class which initializes the different variables stored in the Product object such as name, description, and price.
+ * Product class which initializes the different variables stored in the Product object such as name, description, 
+ * and price. Implements the Comparable interface to override the .compareTo() method
  */
-public class Product {
+public class Product implements Comparable<Product> {
     String name;
     private String description;
     private double price;
@@ -164,5 +165,16 @@ public class Product {
         System.out.println("Description: " + this.description);
         System.out.println("Price: $" + this.price);
         System.out.println("Quantity: " + this.quantity);
+    }
+
+    /**
+     * Overridden method from the Comparable interface that compares the name values of two Product objects
+     * @param p input of the Product object to compare name values against
+     * @return the value of the result of the comparison
+     */
+    @Override
+    public int compareTo(Product p) {
+        int value = this.name.compareTo(p.name);
+        return value;
     }
 }

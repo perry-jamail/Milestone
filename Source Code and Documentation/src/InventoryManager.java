@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -140,5 +139,88 @@ public class InventoryManager {
                 }
             }
         }
+    }
+
+    /**
+     * Method that uses the .sort() method to order the input ArrayList by names in alphabetical order ascending
+     * @param p the input of an ArrayList<Product>
+     * @return an ArrayList<Product>
+     */
+    public ArrayList<Product> sortByNameAscending(ArrayList<Product> p) {
+        Collections.sort(p);
+        return p;
+    }
+
+    /**
+     * Method that uses the .sort() method to order the input ArrayList by names in alphabetical order descending
+     * @param p the input of an ArrayList<Product>
+     * @return an ArrayList<Product>
+     */
+    public ArrayList<Product> sortByNameDescending(ArrayList<Product> p) {
+        ArrayList<Product> arr = new ArrayList<Product>();
+        for (int i = 0; i < p.size(); i++) {
+            arr.add(p.get(i));
+        }
+
+        Collections.sort(arr);
+        p.clear();
+
+        for (int x = arr.size() - 1; x >= 0; x--) {
+            p.add(arr.get(x));
+        }
+
+        return p;
+    }
+
+    /**
+     * Method that uses the .sort() method to order the input ArrayList by price in ascending order
+     * @param p the input of an ArrayList<Product>
+     * @return an ArrayList<Product>
+     */
+    public ArrayList<Product> sortByPriceAscending(ArrayList<Product> p) {
+        ArrayList<Product> ref = new ArrayList<Product>();
+        for (int i = 0; i < p.size(); i++) {
+            ref.add(p.get(i));
+        }
+
+        ArrayList<Double> arr = new ArrayList<Double>();
+        for (int i = 0; i < p.size(); i++) {
+            arr.add(p.get(i).getPrice());
+        }
+
+        Collections.sort(arr);
+        p.clear();
+
+        for (int i = 0; i < ref.size(); i++) {
+            for (int x = 0; x < ref.size(); x++) {
+                if (arr.get(i) == ref.get(x).getPrice()) {
+                    p.add(ref.get(x));
+                }
+            }
+        }
+
+        return p;
+    }
+
+    /**
+     * Method that uses the .sort() method to order the input ArrayList by price in descending order
+     * @param p the input of an ArrayList<Product>
+     * @return an ArrayList<Product>
+     */
+    public ArrayList<Product> sortByPriceDescending(ArrayList<Product> p) {
+        sortByPriceAscending(p);
+
+        ArrayList<Product> arr = new ArrayList<Product>();
+        for (int i = 0; i < p.size(); i++) {
+            arr.add(p.get(i));
+        }
+
+        p.clear();
+
+        for (int x = arr.size() - 1; x >= 0; x--) {
+            p.add(arr.get(x));
+        }
+
+        return p;
     }
 }

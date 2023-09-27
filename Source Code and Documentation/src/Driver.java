@@ -7,6 +7,13 @@ public class Driver {
      */
     public static void main(String[] args) {
         Store store = new Store();
-        store.manager.showOptions(store);
+        //store.manager.showOptions(store);
+        //store.displayStoreItems();
+        store.manager.sortByNameAscending(store.products);
+        store.manager.sortByNameDescending(store.products);
+        store.manager.sortByPriceAscending(store.products);
+        store.manager.sortByPriceDescending(store.products);
+        store.displayStoreItems();
+        
     }
 }
